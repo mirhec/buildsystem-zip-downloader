@@ -19,7 +19,8 @@ class ZipDependencyResolver(Builder):
     @task('deps')
     def dependencies(self):
         '''Downloads and extracts the dependencies defined in self.deps'''
-        shutil.rmtree(self.depdir)
+        if os.path.exists(self.depdir):
+            shutil.rmtree(self.depdir)
 
         for dep in self.deps:
             urlretrieve(dep['url'], 'tmp.zip')
